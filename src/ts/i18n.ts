@@ -1,7 +1,23 @@
-(function () {
-  'use strict';
+/**
+ * i18n module — locale detection, persistence, DOM translation.
+ *
+ * Any element with `data-i18n="some-key-name"` gets its text replaced by
+ * `translations[locale][toKey('some-key-name')]`. Translations containing
+ * HTML markup (e.g. <strong>) are applied via innerHTML, plain strings via
+ * textContent.
+ */
 
-  const translations = {
+export type Locale = 'pt-BR' | 'en' | 'es';
+export type Theme = 'light' | 'dark' | 'auto';
+type Dict = Record<string, string>;
+
+export const THEME_LABEL_KEYS: Record<Theme, string> = {
+  light: 'themeLight',
+  dark: 'themeDark',
+  auto: 'themeAuto',
+};
+
+  const translations: Record<Locale, Dict> = {
     'pt-BR': {
       heroLabel: 'Desenvolvedor de Software Full Stack',
       heroTitle: 'Construo software sustentável e sistemas de missão crítica.',
@@ -633,145 +649,156 @@
     },
   };
 
-  const LOCALE_STORAGE_KEY = 'portfolio-locale';
-  let currentLocale = 'pt-BR';
+const LOCALE_STORAGE_KEY = 'portfolio-locale';
+const VALID_LOCALES = Object.keys(translations) as Locale[];
+let currentLocale: Locale = 'pt-BR';
 
-  function getTranslations(locale) {
-    return translations[locale] || translations['pt-BR'];
+export function getTranslations(locale: Locale): Dict {
+  return translations[locale] ?? translations['pt-BR'];
+}
+
+export function t(key: string): string {
+  const value = getTranslations(currentLocale)[key];
+  return value !== undefined ? value : '';
+}
+
+function toKey(attr: string): string {
+  return attr
+    .split('-')
+    .map((part, i) => (i === 0 ? part : part.charAt(0).toUpperCase() + part.slice(1)))
+    .join('');
+}
+
+function detectLocale(browserLang: string): Locale {
+  const lower = browserLang.toLowerCase();
+  if (lower.startsWith('pt')) return 'pt-BR';
+  if (lower.startsWith('es')) return 'es';
+  return 'en';
+}
+
+function readStoredLocale(): Locale | null {
+  try {
+    const stored = localStorage.getItem(LOCALE_STORAGE_KEY);
+    return stored && VALID_LOCALES.includes(stored as Locale) ? (stored as Locale) : null;
+  } catch {
+    return null;
   }
+}
 
-  function t(key) {
-    const dict = getTranslations(currentLocale);
-    return dict[key] !== undefined ? dict[key] : '';
-  }
+const LANG_META: Record<Locale, { flag: string; name: string }> = {
+  'pt-BR': { flag: '🇧🇷', name: 'Português' },
+  en: { flag: '🇺🇸', name: 'English' },
+  es: { flag: '🇪🇸', name: 'Español' },
+};
 
-  // Converts a data-i18n attribute like "experience1-bullet-2" into the
-  // camelCase translation key "experience1Bullet2".
-  function toKey(attr) {
-    return attr
-      .split('-')
-      .map((part, i) => (i === 0 ? part : part.charAt(0).toUpperCase() + part.slice(1)))
-      .join('');
-  }
+function initLocale(): void {
+  const params = new URLSearchParams(window.location.search);
+  const urlLocale = params.get('lang');
 
-  function detectLocale(browserLang) {
-    const lang = (browserLang || '').toLowerCase();
-    if (lang.startsWith('en')) return 'en';
-    if (lang.startsWith('es')) return 'es';
-    return 'pt-BR';
-  }
-
-  function initI18n() {
-    try {
-      const urlLang = new URLSearchParams(window.location.search).get('lang');
-      const storedLocale = localStorage.getItem(LOCALE_STORAGE_KEY);
-      const browserLang = navigator.language || navigator.userLanguage;
-
-      if (urlLang && translations[urlLang]) {
-        currentLocale = urlLang;
-      } else if (storedLocale && translations[storedLocale]) {
-        currentLocale = storedLocale;
-      } else {
-        currentLocale = detectLocale(browserLang);
-      }
-    } catch (e) {
-      currentLocale = 'pt-BR';
-    }
-  }
-
-  function setLocale(locale) {
-    if (!translations[locale]) {
-      console.warn(`Locale "${locale}" not found, falling back to pt-BR`);
-      locale = 'pt-BR';
-    }
-
-    currentLocale = locale;
-    try {
-      localStorage.setItem(LOCALE_STORAGE_KEY, locale);
-    } catch (e) {}
-
-    updateAllTranslations();
-    syncLanguageSelector();
-  }
-
-  function updateAllTranslations() {
-    const dict = getTranslations(currentLocale);
-    const year = new Date().getFullYear();
-
-    document.documentElement.lang = currentLocale;
-
-    document.querySelectorAll('[data-i18n]').forEach((el) => {
-      const attr = el.dataset.i18n;
-      const value = dict[toKey(attr)];
-      if (value === undefined) return;
-
-      if (attr === 'footer-copyright') {
-        el.innerHTML = String(value).replace('{year}', year);
-        return;
-      }
-
-      if (value.indexOf('<') !== -1) {
-        el.innerHTML = value;
-      } else {
-        el.textContent = value;
-      }
-    });
-
-    const themeNameEl = document.getElementById('theme-name');
-    if (themeNameEl) {
-      const theme = document.documentElement.getAttribute('data-theme') || 'auto';
-      const key = { light: 'themeLight', dark: 'themeDark', auto: 'themeAuto' }[theme];
-      if (key) themeNameEl.textContent = t(key);
-    }
-  }
-
-  const LANG_META = {
-    'pt-BR': { flag: '🇧🇷', name: 'Português' },
-    en: { flag: '🇺🇸', name: 'English' },
-    es: { flag: '🇪🇸', name: 'Español' },
-  };
-
-  function syncLanguageSelector() {
-    const meta = LANG_META[currentLocale] || LANG_META['pt-BR'];
-    const flagEl = document.getElementById('lang-flag');
-    const nameEl = document.getElementById('lang-name');
-    if (flagEl) flagEl.textContent = meta.flag;
-    if (nameEl) nameEl.textContent = meta.name;
-
-    document
-      .querySelectorAll('#language-selector .selector-option[data-lang]')
-      .forEach((opt) => {
-        const active = opt.dataset.lang === currentLocale;
-        opt.classList.toggle('active', active);
-        opt.setAttribute('aria-selected', active ? 'true' : 'false');
-      });
-  }
-
-  function setupLanguageSelector() {
-    document
-      .querySelectorAll('#language-selector .selector-option[data-lang]')
-      .forEach((opt) => {
-        opt.addEventListener('click', () => setLocale(opt.dataset.lang));
-      });
-
-    syncLanguageSelector();
-  }
-
-  function init() {
-    initI18n();
-    updateAllTranslations();
-    setupLanguageSelector();
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+  if (urlLocale && VALID_LOCALES.includes(urlLocale as Locale)) {
+    currentLocale = urlLocale as Locale;
   } else {
-    init();
+    const stored = readStoredLocale();
+    currentLocale = stored ?? detectLocale(navigator.language || 'en');
   }
 
-  window.portfolioI18n = {
-    setLocale,
-    getLocale: () => currentLocale,
-    t,
-  };
-})();
+  document.documentElement.lang = currentLocale;
+  try {
+    localStorage.setItem(LOCALE_STORAGE_KEY, currentLocale);
+  } catch {
+    /* storage unavailable */
+  }
+}
+
+export function setLocale(locale: string): void {
+  if (!(locale in translations)) return;
+  currentLocale = locale as Locale;
+  try {
+    localStorage.setItem(LOCALE_STORAGE_KEY, currentLocale);
+  } catch {
+    /* storage unavailable */
+  }
+  updateAllTranslations();
+  syncLanguageSelector();
+}
+
+function updateAllTranslations(): void {
+  const dict = getTranslations(currentLocale);
+
+  document.querySelectorAll<HTMLElement>('[data-i18n]').forEach((el) => {
+    const attr = el.dataset.i18n;
+    if (!attr) return;
+    const value = dict[toKey(attr)];
+    if (value === undefined) return;
+    if (value.includes('<')) {
+      el.innerHTML = value;
+    } else {
+      el.textContent = value;
+    }
+  });
+
+  document.querySelectorAll<HTMLElement>('.theme-menu [data-theme]').forEach((option) => {
+    const theme = option.dataset.theme;
+    if (!theme) return;
+    const key = THEME_LABEL_KEYS[theme as Theme];
+    if (key) {
+      const label = option.querySelector<HTMLElement>('.selector-option-label');
+      if (label) label.textContent = t(key);
+    }
+  });
+
+  const themeName = document.getElementById('theme-name');
+  if (themeName) {
+    const selected = document.querySelector<HTMLElement>('.theme-menu [aria-selected="true"]');
+    const themeValue = (selected?.dataset.theme ?? 'auto') as Theme;
+    themeName.textContent = t(THEME_LABEL_KEYS[themeValue] ?? 'themeAuto');
+  }
+
+  document.title = dict['metaTitle'] || document.title;
+}
+
+function syncLanguageSelector(): void {
+  const meta = LANG_META[currentLocale];
+  const flagEl = document.querySelector<HTMLElement>('.lang-selector [data-role="flag"]');
+  const nameEl = document.querySelector<HTMLElement>('.lang-selector [data-role="name"]');
+  if (flagEl) flagEl.textContent = meta.flag;
+  if (nameEl) nameEl.textContent = meta.name;
+
+  document.querySelectorAll<HTMLElement>('.lang-selector .selector-option').forEach((option) => {
+    const isActive = option.dataset.lang === currentLocale;
+    option.classList.toggle('active', isActive);
+    option.setAttribute('aria-selected', String(isActive));
+  });
+}
+
+function setupLanguageSelector(): void {
+  document.querySelectorAll<HTMLElement>('.lang-selector .selector-option').forEach((option) => {
+    option.addEventListener('click', () => {
+      const lang = option.dataset.lang;
+      if (lang) setLocale(lang);
+    });
+  });
+}
+
+export function initI18n(): void {
+  initLocale();
+  updateAllTranslations();
+  setupLanguageSelector();
+  syncLanguageSelector();
+}
+
+declare global {
+  interface Window {
+    portfolioI18n?: {
+      setLocale(locale: string): void;
+      getLocale(): Locale;
+      t(key: string): string;
+    };
+  }
+}
+
+window.portfolioI18n = {
+  setLocale,
+  getLocale: () => currentLocale,
+  t,
+};
