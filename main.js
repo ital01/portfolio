@@ -520,6 +520,7 @@ function setLocale(locale) {
   if (!(locale in translations))
     return;
   currentLocale = locale;
+  document.documentElement.lang = currentLocale;
   try {
     localStorage.setItem(LOCALE_STORAGE_KEY, currentLocale);
   } catch {}
@@ -541,41 +542,29 @@ function updateAllTranslations() {
       el.textContent = value;
     }
   });
-  document.querySelectorAll(".theme-menu [data-theme]").forEach((option) => {
-    const theme = option.dataset.theme;
-    if (!theme)
-      return;
-    const key = THEME_LABEL_KEYS[theme];
-    if (key) {
-      const label = option.querySelector(".selector-option-label");
-      if (label)
-        label.textContent = t(key);
-    }
-  });
   const themeName = document.getElementById("theme-name");
   if (themeName) {
-    const selected = document.querySelector('.theme-menu [aria-selected="true"]');
-    const themeValue = selected?.dataset.theme ?? "auto";
+    const themeValue = document.documentElement.dataset.theme ?? "auto";
     themeName.textContent = t(THEME_LABEL_KEYS[themeValue] ?? "themeAuto");
   }
   document.title = dict["metaTitle"] || document.title;
 }
 function syncLanguageSelector() {
   const meta = LANG_META[currentLocale];
-  const flagEl = document.querySelector('.lang-selector [data-role="flag"]');
-  const nameEl = document.querySelector('.lang-selector [data-role="name"]');
+  const flagEl = document.getElementById("lang-flag");
+  const nameEl = document.getElementById("lang-name");
   if (flagEl)
     flagEl.textContent = meta.flag;
   if (nameEl)
     nameEl.textContent = meta.name;
-  document.querySelectorAll(".lang-selector .selector-option").forEach((option) => {
+  document.querySelectorAll("#language-selector .selector-option").forEach((option) => {
     const isActive = option.dataset.lang === currentLocale;
     option.classList.toggle("active", isActive);
     option.setAttribute("aria-selected", String(isActive));
   });
 }
 function setupLanguageSelector() {
-  document.querySelectorAll(".lang-selector .selector-option").forEach((option) => {
+  document.querySelectorAll("#language-selector .selector-option").forEach((option) => {
     option.addEventListener("click", () => {
       const lang = option.dataset.lang;
       if (lang)
@@ -606,6 +595,7 @@ function qsa(selector, root = document) {
 // src/ts/theme.ts
 var THEME_STORAGE_KEY = "portfolio-theme";
 var THEMES = ["light", "dark", "auto"];
+var DROPDOWN = "#theme-selector";
 function getPreferredTheme() {
   try {
     const stored = localStorage.getItem(THEME_STORAGE_KEY);
@@ -619,19 +609,20 @@ function syncThemeButton(theme) {
   try {
     localStorage.setItem(THEME_STORAGE_KEY, theme);
   } catch {}
-  qsa(".theme-menu [data-theme]").forEach((option) => {
-    const isActive = option.dataset.theme === theme;
+  const dropdown = qs(DROPDOWN);
+  if (!dropdown)
+    return;
+  qsa(".selector-option[data-theme-value]", dropdown).forEach((option) => {
+    const isActive = option.dataset.themeValue === theme;
     option.classList.toggle("active", isActive);
     option.setAttribute("aria-selected", String(isActive));
   });
-  const selected = qs(`.theme-menu [data-theme="${theme}"]`);
-  const btnIcon = qs(".theme-selector .selector-btn-icon");
+  const selected = qs(`.selector-option[data-theme-value="${theme}"]`, dropdown);
+  const icon = qs("#theme-icon");
+  const optionIcon = selected ? qs(".option-icon", selected) : null;
+  if (icon && optionIcon)
+    icon.innerHTML = optionIcon.innerHTML;
   const themeName = qs("#theme-name");
-  if (btnIcon && selected) {
-    const icon = selected.querySelector(".selector-option-icon");
-    if (icon)
-      btnIcon.innerHTML = icon.innerHTML;
-  }
   if (themeName)
     themeName.textContent = t(THEME_LABEL_KEYS[theme]);
 }
@@ -639,9 +630,12 @@ function setTheme(theme) {
   syncThemeButton(theme);
 }
 function initTheme() {
-  qsa(".theme-menu [data-theme]").forEach((option) => {
+  const dropdown = qs(DROPDOWN);
+  if (!dropdown)
+    return;
+  qsa(".selector-option[data-theme-value]", dropdown).forEach((option) => {
     option.addEventListener("click", () => {
-      const theme = option.dataset.theme;
+      const theme = option.dataset.themeValue;
       if (theme)
         setTheme(theme);
     });
@@ -650,32 +644,34 @@ function initTheme() {
 }
 
 // src/ts/selectors.ts
-function closeDropdown(dropdown) {
-  dropdown.classList.remove("open");
-  const btn = dropdown.querySelector(".selector-btn");
-  btn?.setAttribute("aria-expanded", "false");
+function setOpen(dropdown, open) {
+  const menu = qs(".selector-menu", dropdown);
+  const btn = qs(".selector-btn", dropdown);
+  if (!menu || !btn)
+    return;
+  menu.hidden = !open;
+  btn.setAttribute("aria-expanded", String(open));
+  dropdown.classList.toggle("open", open);
 }
 function closeAllDropdowns() {
-  qsa(".selector-dropdown.open").forEach(closeDropdown);
+  qsa(".selector-dropdown.open").forEach((d) => setOpen(d, false));
 }
 function initSelectorDropdowns() {
   qsa(".selector-dropdown").forEach((dropdown) => {
-    const btn = dropdown.querySelector(".selector-btn");
-    const menu = dropdown.querySelector(".selector-menu");
+    const btn = qs(".selector-btn", dropdown);
+    const menu = qs(".selector-menu", dropdown);
     if (!btn || !menu)
       return;
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
-      const isOpen = dropdown.classList.contains("open");
+      const isOpen = !menu.hidden;
       closeAllDropdowns();
-      if (!isOpen) {
-        dropdown.classList.add("open");
-        btn.setAttribute("aria-expanded", "true");
-      }
+      if (!isOpen)
+        setOpen(dropdown, true);
     });
     menu.addEventListener("click", (e) => {
       if (e.target.closest(".selector-option")) {
-        closeDropdown(dropdown);
+        setOpen(dropdown, false);
       }
     });
     btn.addEventListener("keydown", (e) => {
@@ -684,9 +680,8 @@ function initSelectorDropdowns() {
         return;
       if (e.key === "ArrowDown" || e.key === "ArrowUp") {
         e.preventDefault();
-        if (!dropdown.classList.contains("open")) {
-          dropdown.classList.add("open");
-          btn.setAttribute("aria-expanded", "true");
+        if (menu.hidden) {
+          setOpen(dropdown, true);
           options[0]?.focus();
           return;
         }
@@ -694,7 +689,7 @@ function initSelectorDropdowns() {
         const next = e.key === "ArrowDown" ? (current + 1) % options.length : (current - 1 + options.length) % options.length;
         options[next]?.focus();
       } else if (e.key === "Escape") {
-        closeDropdown(dropdown);
+        setOpen(dropdown, false);
       }
     });
   });

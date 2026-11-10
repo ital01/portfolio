@@ -1,39 +1,40 @@
-import { qsa } from './dom.js';
+import { qs, qsa } from './dom.js';
 
-function closeDropdown(dropdown: HTMLElement): void {
-  dropdown.classList.remove('open');
-  const btn = dropdown.querySelector<HTMLElement>('.selector-btn');
-  btn?.setAttribute('aria-expanded', 'false');
+function setOpen(dropdown: HTMLElement, open: boolean): void {
+  const menu = qs('.selector-menu', dropdown);
+  const btn = qs('.selector-btn', dropdown);
+  if (!menu || !btn) return;
+  menu.hidden = !open;
+  btn.setAttribute('aria-expanded', String(open));
+  dropdown.classList.toggle('open', open);
 }
 
 function closeAllDropdowns(): void {
-  qsa('.selector-dropdown.open').forEach(closeDropdown);
+  qsa('.selector-dropdown.open').forEach((d) => setOpen(d, false));
 }
 
 /**
  * Generic dropdown behaviour for `.selector-dropdown` widgets
- * (theme selector, language selector). Handles toggle, outside-click,
- * Escape and ArrowUp/ArrowDown keyboard navigation.
+ * (theme selector, language selector). The menu is a `<ul hidden>` —
+ * visibility is driven by the `hidden` attribute, matching selectors.css.
+ * Handles toggle, outside-click, Escape and ArrowUp/ArrowDown navigation.
  */
 export function initSelectorDropdowns(): void {
   qsa('.selector-dropdown').forEach((dropdown) => {
-    const btn = dropdown.querySelector<HTMLElement>('.selector-btn');
-    const menu = dropdown.querySelector<HTMLElement>('.selector-menu');
+    const btn = qs('.selector-btn', dropdown);
+    const menu = qs('.selector-menu', dropdown);
     if (!btn || !menu) return;
 
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      const isOpen = dropdown.classList.contains('open');
+      const isOpen = !menu.hidden;
       closeAllDropdowns();
-      if (!isOpen) {
-        dropdown.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
-      }
+      if (!isOpen) setOpen(dropdown, true);
     });
 
     menu.addEventListener('click', (e) => {
       if ((e.target as HTMLElement).closest('.selector-option')) {
-        closeDropdown(dropdown);
+        setOpen(dropdown, false);
       }
     });
 
@@ -43,9 +44,8 @@ export function initSelectorDropdowns(): void {
 
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         e.preventDefault();
-        if (!dropdown.classList.contains('open')) {
-          dropdown.classList.add('open');
-          btn.setAttribute('aria-expanded', 'true');
+        if (menu.hidden) {
+          setOpen(dropdown, true);
           options[0]?.focus();
           return;
         }
@@ -56,7 +56,7 @@ export function initSelectorDropdowns(): void {
             : (current - 1 + options.length) % options.length;
         options[next]?.focus();
       } else if (e.key === 'Escape') {
-        closeDropdown(dropdown);
+        setOpen(dropdown, false);
       }
     });
   });

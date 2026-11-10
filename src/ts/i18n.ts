@@ -713,6 +713,7 @@ function initLocale(): void {
 export function setLocale(locale: string): void {
   if (!(locale in translations)) return;
   currentLocale = locale as Locale;
+  document.documentElement.lang = currentLocale;
   try {
     localStorage.setItem(LOCALE_STORAGE_KEY, currentLocale);
   } catch {
@@ -737,20 +738,12 @@ function updateAllTranslations(): void {
     }
   });
 
-  document.querySelectorAll<HTMLElement>('.theme-menu [data-theme]').forEach((option) => {
-    const theme = option.dataset.theme;
-    if (!theme) return;
-    const key = THEME_LABEL_KEYS[theme as Theme];
-    if (key) {
-      const label = option.querySelector<HTMLElement>('.selector-option-label');
-      if (label) label.textContent = t(key);
-    }
-  });
-
+  // Option labels (theme-light/dark/auto, etc.) are already covered by the
+  // data-i18n pass above; only #theme-name needs manual sync since it
+  // reflects the active theme rather than a static key.
   const themeName = document.getElementById('theme-name');
   if (themeName) {
-    const selected = document.querySelector<HTMLElement>('.theme-menu [aria-selected="true"]');
-    const themeValue = (selected?.dataset.theme ?? 'auto') as Theme;
+    const themeValue = (document.documentElement.dataset.theme ?? 'auto') as Theme;
     themeName.textContent = t(THEME_LABEL_KEYS[themeValue] ?? 'themeAuto');
   }
 
@@ -759,12 +752,12 @@ function updateAllTranslations(): void {
 
 function syncLanguageSelector(): void {
   const meta = LANG_META[currentLocale];
-  const flagEl = document.querySelector<HTMLElement>('.lang-selector [data-role="flag"]');
-  const nameEl = document.querySelector<HTMLElement>('.lang-selector [data-role="name"]');
+  const flagEl = document.getElementById('lang-flag');
+  const nameEl = document.getElementById('lang-name');
   if (flagEl) flagEl.textContent = meta.flag;
   if (nameEl) nameEl.textContent = meta.name;
 
-  document.querySelectorAll<HTMLElement>('.lang-selector .selector-option').forEach((option) => {
+  document.querySelectorAll<HTMLElement>('#language-selector .selector-option').forEach((option) => {
     const isActive = option.dataset.lang === currentLocale;
     option.classList.toggle('active', isActive);
     option.setAttribute('aria-selected', String(isActive));
@@ -772,7 +765,7 @@ function syncLanguageSelector(): void {
 }
 
 function setupLanguageSelector(): void {
-  document.querySelectorAll<HTMLElement>('.lang-selector .selector-option').forEach((option) => {
+  document.querySelectorAll<HTMLElement>('#language-selector .selector-option').forEach((option) => {
     option.addEventListener('click', () => {
       const lang = option.dataset.lang;
       if (lang) setLocale(lang);
