@@ -3,22 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Italo Almeida — Desenvolvedor de Software Full Stack</title>
-    <meta
-      name="description"
-      content="Portfólio de Italo Almeida, Desenvolvedor de Software Full Stack. Experiência em React, React Native, Angular, Next.js, Node.js, NestJS, apps mobile whitelabel multi-tenant, BFFs, IA e sistemas críticos."
-    />
+    <title>Italo Almeida — Full Stack Software Developer</title>
+
+    <!-- SEO: Primary language English -->
+    <link rel="alternate" hreflang="pt-BR" href="https://ital01.github.io/portfolio/" />
+    <link rel="alternate" hreflang="en" href="https://ital01.github.io/portfolio/" />
+    <link rel="alternate" hreflang="es" href="https://ital01.github.io/portfolio/" />
+    <meta name="language" content="pt-BR" />
 
     <meta
-      property="og:title"
-      content="Italo Almeida — Desenvolvedor de Software Full Stack"
+      name="description"
+      content="Full Stack Software Developer specializing in building sustainable software and mission-critical systems. Expertise in React, React Native, Angular, Next.js, Node.js, NestJS, multi-tenant mobile ecosystems, BFFs, authentication (Keycloak, OAuth 2.0, RBAC, SSO), CI/CD automation, and clean architecture patterns. Based in Americana, São Paulo, Brazil."
     />
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ital01.github.io/portfolio/" />
+    <meta property="og:title" content="Italo Almeida — Full Stack Software Developer" />
     <meta
       property="og:description"
-      content="Engenharia de software focada em clareza, manutenibilidade, aplicações críticas e impacto real."
+      content="Building sustainable software, APIs, and integrations. React, Next.js, Node.js, NestJS, authentication systems, CI/CD automation, and clean architecture."
     />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://ital01.github.io/portfolio" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://ital01.github.io/portfolio/" />
+    <meta name="twitter:title" content="Italo Almeida — Full Stack Software Developer" />
+    <meta
+      name="twitter:description"
+      content="Full Stack Software Developer specializing in sustainable software and mission-critical systems."
+    />
+
 
     <link rel="stylesheet" href="index.css" />
   </head>
@@ -27,76 +43,184 @@
       <div class="container nav-wrapper">
         <a href="#" class="brand">ITALO.ALMEIDA</a>
 
-        <div class="theme-toggle" role="group" aria-label="Seletor de tema">
+        <div class="nav-right">
+        <!-- Theme Selector -->
+        <div class="selector-dropdown" id="theme-selector">
           <button
-            class="theme-toggle-btn"
-            data-theme-value="light"
-            aria-label="Modo claro"
-            title="Modo claro"
+            class="selector-btn"
+            id="theme-btn"
+            type="button"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            aria-label="Selecionar tema"
           >
+            <span class="selector-icon" id="theme-icon" aria-hidden="true"></span>
+            <span class="theme-name" id="theme-name">Auto</span>
             <svg
+              class="selector-chevron"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
               stroke-width="2"
+              aria-hidden="true"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-              />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
           </button>
+          <ul class="selector-menu" role="listbox" aria-label="Tema" hidden>
+            <li role="presentation">
+              <button
+                type="button"
+                class="selector-option"
+                data-theme-value="light"
+                role="option"
+                aria-selected="false"
+              >
+                <span class="option-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                </span>
+                <span data-i18n="theme-light">Claro</span>
+                <span class="option-check" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 6L9 17l-5-5" />
+                  </svg>
+                </span>
+              </button>
+            </li>
+            <li role="presentation">
+              <button
+                type="button"
+                class="selector-option"
+                data-theme-value="dark"
+                role="option"
+                aria-selected="false"
+              >
+                <span class="option-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                  </svg>
+                </span>
+                <span data-i18n="theme-dark">Escuro</span>
+                <span class="option-check" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 6L9 17l-5-5" />
+                  </svg>
+                </span>
+              </button>
+            </li>
+            <li role="presentation">
+              <button
+                type="button"
+                class="selector-option"
+                data-theme-value="auto"
+                role="option"
+                aria-selected="false"
+              >
+                <span class="option-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </span>
+                <span data-i18n="theme-auto">Auto</span>
+                <span class="option-check" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 6L9 17l-5-5" />
+                  </svg>
+                </span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Language Selector -->
+        <div class="selector-dropdown language-selector" id="language-selector">
           <button
-            class="theme-toggle-btn"
-            data-theme-value="dark"
-            aria-label="Modo escuro"
-            title="Modo escuro"
+            class="selector-btn"
+            id="lang-btn"
+            type="button"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            aria-label="Selecionar idioma"
           >
+            <span class="lang-flag" id="lang-flag" aria-hidden="true">🇧🇷</span>
+            <span class="lang-name" id="lang-name">Português</span>
             <svg
+              class="selector-chevron"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
               stroke-width="2"
+              aria-hidden="true"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-              />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
           </button>
-          <button
-            class="theme-toggle-btn"
-            data-theme-value="auto"
-            aria-label="Seguir sistema"
-            title="Seguir sistema"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
-          </button>
+          <ul class="selector-menu" role="listbox" aria-label="Idioma" hidden>
+            <li role="presentation">
+              <button
+                type="button"
+                class="selector-option"
+                data-lang="pt-BR"
+                role="option"
+                aria-selected="true"
+              >
+                <span aria-hidden="true">🇧🇷</span>
+                Português
+                <span class="option-check" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 6L9 17l-5-5" />
+                  </svg>
+                </span>
+              </button>
+            </li>
+            <li role="presentation">
+              <button
+                type="button"
+                class="selector-option"
+                data-lang="en"
+                role="option"
+                aria-selected="false"
+              >
+                <span aria-hidden="true">🇺🇸</span>
+                English
+                <span class="option-check" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 6L9 17l-5-5" />
+                  </svg>
+                </span>
+              </button>
+            </li>
+            <li role="presentation">
+              <button
+                type="button"
+                class="selector-option"
+                data-lang="es"
+                role="option"
+                aria-selected="false"
+              >
+                <span aria-hidden="true">🇪🇸</span>
+                Español
+                <span class="option-check" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 6L9 17l-5-5" />
+                  </svg>
+                </span>
+              </button>
+            </li>
+          </ul>
         </div>
 
         <nav aria-label="Navegação Principal">
           <ul class="nav-menu">
-            <li><a href="#sobre" class="nav-link">Sobre</a></li>
-            <li><a href="#solucoes" class="nav-link">Soluções Entregues</a></li>
-            <li><a href="#experiencia" class="nav-link">Experiência</a></li>
+            <li><a href="#sobre" class="nav-link" data-i18n="nav-about">Sobre</a></li>
+            <li><a href="#solucoes" class="nav-link" data-i18n="nav-solutions">Soluções Entregues</a></li>
+            <li><a href="#experiencia" class="nav-link" data-i18n="nav-experience">Experiência</a></li>
             <li>
-              <a href="#contato" class="btn btn-primary">Vamos conversar</a>
+              <a href="#contato" class="btn btn-primary" data-i18n="nav-contact">Vamos conversar</a>
             </li>
           </ul>
         </nav>
@@ -120,15 +244,17 @@
             />
           </svg>
         </button>
+        </div>
+
       </div>
 
       <nav class="mobile-nav" aria-label="Navegação Mobile">
         <ul>
-          <li><a href="#sobre" class="nav-link">Sobre</a></li>
-          <li><a href="#solucoes" class="nav-link">Soluções Entregues</a></li>
-          <li><a href="#experiencia" class="nav-link">Experiência</a></li>
+          <li><a href="#sobre" class="nav-link" data-i18n="nav-about-mobile">Sobre</a></li>
+          <li><a href="#solucoes" class="nav-link" data-i18n="nav-solutions-mobile">Soluções Entregues</a></li>
+          <li><a href="#experiencia" class="nav-link" data-i18n="nav-experience-mobile">Experiência</a></li>
           <li>
-            <a href="#contato" class="btn btn-primary">Vamos conversar</a>
+            <a href="#contato" class="btn btn-primary" data-i18n="nav-contact-mobile">Vamos conversar</a>
           </li>
         </ul>
       </nav>
@@ -138,22 +264,22 @@
       <section class="hero">
         <div class="container hero-grid">
           <div class="hero-content">
-            <p class="section-label">Desenvolvedor de Software Full Stack</p>
-            <h1 class="hero-title">
+            <p class="section-label" data-i18n="hero-label">Desenvolvedor de Software Full Stack</p>
+            <h1 class="hero-title" data-i18n="hero-title">
               Construo software sustentável e sistemas de missão crítica.
             </h1>
-            <p class="hero-subtitle">
+            <p class="hero-subtitle" data-i18n="hero-subtitle">
               React · React Native · Angular · Next.js · Node.js · NestJS
             </p>
-            <p class="hero-description">
+            <p class="hero-description" data-i18n="hero-description">
               Especializado no desenvolvimento de aplicações web, ecossistemas
               mobile whitelabel, BFFs e APIs. Foco na sustentação de sistemas
               críticos com alta disponibilidade, automação de CI/CD e evolução
               arquitetural.
             </p>
             <div class="hero-actions">
-              <a href="#solucoes" class="btn btn-primary">Soluções Entregues</a>
-              <a href="#contato" class="btn btn-secondary">Entrar em contato</a>
+              <a href="#solucoes" class="btn btn-primary" data-i18n="hero-btn-primary">Soluções Entregues</a>
+              <a href="#contato" class="btn btn-secondary" data-i18n="hero-btn-secondary">Entrar em contato</a>
             </div>
           </div>
 
@@ -208,15 +334,13 @@
 
       <section>
         <div class="container">
-          <p class="section-label animate-on-scroll">Metodologia</p>
-          <h2 class="section-title animate-on-scroll">
-            Abordagem de Engenharia
-          </h2>
+          <p class="section-label animate-on-scroll" data-i18n="methodology-section-label">Metodologia</p>
+          <h2 class="section-title animate-on-scroll" data-i18n="methodology-title">Abordagem de Engenharia</h2>
           <div class="grid-4">
             <article class="card-pillar animate-on-scroll">
               <div class="pillar-num">01</div>
-              <h3 class="pillar-title">Visão de Produto & Negócio</h3>
-              <p class="pillar-desc">
+              <h3 class="pillar-title" data-i18n="pillar1-title">Visão de Produto & Negócio</h3>
+              <p class="pillar-desc" data-i18n="pillar1-desc">
                 Compreender a necessidade do cliente e o impacto operacional
                 antes de desenhar a solução técnica.
               </p>
@@ -224,8 +348,8 @@
 
             <article class="card-pillar animate-on-scroll">
               <div class="pillar-num">02</div>
-              <h3 class="pillar-title">Resiliência em Legados</h3>
-              <p class="pillar-desc">
+              <h3 class="pillar-title" data-i18n="pillar2-title">Resiliência em Legados</h3>
+              <p class="pillar-desc" data-i18n="pillar2-desc">
                 Manutenção e evolução de sistemas financeiros, bancários e
                 comerciais sem interromper operações críticas.
               </p>
@@ -233,8 +357,8 @@
 
             <article class="card-pillar animate-on-scroll">
               <div class="pillar-num">03</div>
-              <h3 class="pillar-title">Arquitetura Escalável</h3>
-              <p class="pillar-desc">
+              <h3 class="pillar-title" data-i18n="pillar3-title">Arquitetura Escalável</h3>
+              <p class="pillar-desc" data-i18n="pillar3-desc">
                 Construção de aplicações Multi-tenant, BFFs dedicados,
                 desacoplamento por contratos e padrões de Clean Architecture.
               </p>
@@ -242,8 +366,8 @@
 
             <article class="card-pillar animate-on-scroll">
               <div class="pillar-num">04</div>
-              <h3 class="pillar-title">Automação & Observabilidade</h3>
-              <p class="pillar-desc">
+              <h3 class="pillar-title" data-i18n="pillar4-title">Automação & Observabilidade</h3>
+              <p class="pillar-desc" data-i18n="pillar4-desc">
                 Pipelines de CI/CD (GitHub Actions, Jenkins), self-hosted
                 runners, Docker, Terraform e qualidade contínua.
               </p>
@@ -254,21 +378,15 @@
 
       <section id="solucoes">
         <div class="container">
-          <p class="section-label animate-on-scroll">
-            Projetos Reais & Casos de Uso
-          </p>
-          <h2 class="section-title animate-on-scroll">
-            Soluções Desenvolvidas
-          </h2>
+          <p class="section-label animate-on-scroll" data-i18n="solutions-section-label">Projetos Reais & Casos de Uso</p>
+          <h2 class="section-title animate-on-scroll" data-i18n="solutions-title">Soluções Desenvolvidas</h2>
           <div class="projects-stack">
-            <article class="card-project animate-on-scroll">
+            <article class="card-project animate-on-scroll" data-i18n-key="project1">
               <div class="project-header">
-                <h3 class="project-title">
-                  Ecossistema Mobile para Indústria Têxtil (Globals)
-                </h3>
-                <span class="badge-status">Produção (Android & iOS)</span>
+                <h3 class="project-title" data-i18n="project1-title">Ecossistema Mobile para Indústria Têxtil (Globals)</h3>
+                <span class="badge-status" data-i18n="project1-badge">Produção (Android &amp; iOS)</span>
               </div>
-              <p class="project-text">
+              <p class="project-text" data-i18n="project1-desc">
                 Desenvolvimento de dois aplicativos voltados para o setor
                 têxtil. O primeiro consiste em uma aplicação
                 <strong>offline-first</strong> para força de vendas de produtos
@@ -276,30 +394,26 @@
                 foca na gestão interna da empresa, englobando controle de
                 funcionários, comissões, vendas e operações corporativas.
               </p>
-              <div class="project-decisions">
+              <div class="project-decisions" data-i18n="project1-technical">
                 <strong>Decisões e Engenharia:</strong> Sincronização robusta de
                 dados em cenários de conectividade instável (offline-first) e
                 arquitetura modular orientada à performance em campo.
               </div>
               <div class="tech-tags">
-                <span class="tag">React Native</span>
-                <span class="tag">Offline-First</span>
-                <span class="tag">QR Code Scanning</span>
-                <span class="tag">TypeScript</span>
-                <span class="tag">APIs REST</span>
+                <span class="tag" data-i18n="project1-tech-1">React Native</span>
+                <span class="tag" data-i18n="project1-tech-2">Offline-First</span>
+                <span class="tag" data-i18n="project1-tech-3">QR Code Scanning</span>
+                <span class="tag" data-i18n="project1-tech-4">TypeScript</span>
+                <span class="tag" data-i18n="project1-tech-5">APIs REST</span>
               </div>
             </article>
 
-            <article class="card-project animate-on-scroll">
+            <article class="card-project animate-on-scroll" data-i18n-key="project2">
               <div class="project-header">
-                <h3 class="project-title">
-                  Aplicativo Bancário Whitelabel Multi-Tenant (Globals)
-                </h3>
-                <span class="badge-status"
-                  >Produção / Desenvolvedor Principal</span
-                >
+                <h3 class="project-title" data-i18n="project2-title">Aplicativo Bancário Whitelabel Multi-Tenant (Globals)</h3>
+                <span class="badge-status" data-i18n="project2-badge">Produção / Desenvolvedor Principal</span>
               </div>
-              <p class="project-text">
+              <p class="project-text" data-i18n="project2-desc">
                 Atuação inicial na sustentação de aplicativo bancário legado
                 multi-tenant. Posteriormente, liderança técnica e
                 desenvolvimento do zero de uma nova versão moderna do aplicativo
@@ -307,27 +421,25 @@
                 por cliente. Integração com esteiras de CI/CD automatizadas para
                 build e publicação em lojas (Android e iOS).
               </p>
-              <div class="project-decisions">
+              <div class="project-decisions" data-i18n="project2-technical">
                 <strong>Decisões e Engenharia:</strong> Desacoplamento
                 estrutural de temas e layouts dinâmicos, garantindo
                 escalabilidade na entrega de múltiplos produtos bancários a
                 partir de uma base de código unificada.
               </div>
               <div class="tech-tags">
-                <span class="tag">React Native</span>
-                <span class="tag">Whitelabel</span>
-                <span class="tag">Multi-Tenant / Multi-Theme</span>
-                <span class="tag">CI/CD Mobile</span>
+                <span class="tag" data-i18n="project1-tech-1">React Native</span>
+                <span class="tag" data-i18n="project2-tech-2">Whitelabel</span>
+                <span class="tag" data-i18n="project2-tech-3">Multi-Tenant / Multi-Theme</span>
+                <span class="tag" data-i18n="project2-tech-4">CI/CD Mobile</span>
               </div>
             </article>
 
-            <article class="card-project animate-on-scroll">
+            <article class="card-project animate-on-scroll" data-i18n-key="project3">
               <div class="project-header">
-                <h3 class="project-title">
-                  Plataforma Web Fitness — Newon (Globals)
-                </h3>
+                <h3 class="project-title" data-i18n="project3-title">Plataforma Web Fitness — Newon (Globals)</h3>
                 <span class="badge-status"
-                  >Em Produção (<a
+                  ><span data-i18n="project3-badge">Em Produção</span> (<a
                     href="https://www.newon.com.br/home"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -335,168 +447,156 @@
                       color: var(--accent-primary);
                       text-decoration: underline;
                     "
-                    >newon.com.br</a
+                    data-i18n="project3-link">newon.com.br</a
                   >)</span
                 >
               </div>
-              <p class="project-text">
+              <p class="project-text" data-i18n="project3-desc">
                 Desenvolvimento de aplicação web voltada para o segmento fitness
                 e gestão de treinos/operações, entregando alta performance,
                 usabilidade refinada e integração direta com serviços e APIs de
                 backend.
               </p>
-              <div class="project-decisions">
+              <div class="project-decisions" data-i18n="project3-technical">
                 <strong>Decisões e Engenharia:</strong> Estruturação de
                 componentes reutilizáveis, gerenciamento de estado eficiente e
                 foco na experiência do usuário final.
               </div>
               <div class="tech-tags">
-                <span class="tag">Angular</span>
-                <span class="tag">TypeScript</span>
-                <span class="tag">Web Application</span>
-                <span class="tag">APIs REST</span>
+                <span class="tag" data-i18n="project3-tech-1">Angular</span>
+                <span class="tag" data-i18n="project1-tech-4">TypeScript</span>
+                <span class="tag" data-i18n="project3-tech-3">Web Application</span>
+                <span class="tag" data-i18n="project1-tech-5">APIs REST</span>
               </div>
             </article>
 
-            <article class="card-project animate-on-scroll">
+            <article class="card-project animate-on-scroll" data-i18n-key="project4">
               <div class="project-header">
-                <h3 class="project-title">
-                  Sistema de Gestão de Navios com BFF (Globals)
-                </h3>
-                <span class="badge-status">Solução Corporativa</span>
+                <h3 class="project-title" data-i18n="project4-title">Sistema de Gestão de Navios com BFF (Globals)</h3>
+                <span class="badge-status" data-i18n="project4-badge">Solução Corporativa</span>
               </div>
-              <p class="project-text">
+              <p class="project-text" data-i18n="project4-desc">
                 Desenvolvimento de aplicação web para gestão de navios, contando
                 com uma camada dedicada de BFF (Backend For Frontend) construída
                 para orquestrar e integrar de forma segura e performática com um
                 provedor de dados externo.
               </p>
-              <div class="project-decisions">
+              <div class="project-decisions" data-i18n="project4-technical">
                 <strong>Decisões e Engenharia:</strong> Abstração de contratos
                 complexos de APIs externas na camada BFF, reduzindo o
                 acoplamento do frontend e garantindo segurança no tráfego de
                 dados.
               </div>
               <div class="tech-tags">
-                <span class="tag">BFF Pattern</span>
-                <span class="tag">Node.js / NestJS</span>
-                <span class="tag">TypeScript</span>
-                <span class="tag">Integração Externa</span>
+                <span class="tag" data-i18n="project4-tech-1">BFF Pattern</span>
+                <span class="tag" data-i18n="project4-tech-2">Node.js / NestJS</span>
+                <span class="tag" data-i18n="project1-tech-4">TypeScript</span>
+                <span class="tag" data-i18n="project4-tech-4">Integração Externa</span>
               </div>
             </article>
 
-            <article class="card-project animate-on-scroll">
+            <article class="card-project animate-on-scroll" data-i18n-key="project5">
               <div class="project-header">
-                <h3 class="project-title">
-                  Sistema Whitelabel para Gestão de Condomínios (Globals)
-                </h3>
-                <span class="badge-status">Ambiente Operacional</span>
+                <h3 class="project-title" data-i18n="project5-title">Sistema Whitelabel para Gestão de Condomínios (Globals)</h3>
+                <span class="badge-status" data-i18n="project5-badge">Ambiente Operacional</span>
               </div>
-              <p class="project-text">
+              <p class="project-text" data-i18n="project5-desc">
                 Manutenção e evolução de aplicação legada white-label voltada
                 para o mercado de condomínios, servindo simultaneamente a dois
                 públicos distintos: moradores (gestão de avisos, áreas comuns e
                 portaria) e seguranças (controle de acesso e rondas).
               </p>
-              <div class="project-decisions">
+              <div class="project-decisions" data-i18n="project5-technical">
                 <strong>Decisões e Engenharia:</strong> Refatoração segura de
                 código legado e adaptação de regras multi-tenant para atender
                 diferentes condomínios com customizações visuais e funcionais.
               </div>
               <div class="tech-tags">
-                <span class="tag">Full Stack</span>
-                <span class="tag">Whitelabel</span>
-                <span class="tag">Multi-Tenant</span>
-                <span class="tag">Legacy Modernization</span>
+                <span class="tag" data-i18n="project5-tech-1">Full Stack</span>
+                <span class="tag" data-i18n="project2-tech-2">Whitelabel</span>
+                <span class="tag" data-i18n="project5-tech-3">Multi-Tenant</span>
+                <span class="tag" data-i18n="project5-tech-4">Legacy Modernization</span>
               </div>
             </article>
 
-            <article class="card-project animate-on-scroll">
+            <article class="card-project animate-on-scroll" data-i18n-key="project6">
               <div class="project-header">
-                <h3 class="project-title">
-                  Plataforma de Antecipação de Recebíveis Multi-Tenant (Globals)
-                </h3>
-                <span class="badge-status">Projeto Corporativo Integrado</span>
+                <h3 class="project-title" data-i18n="project6-title">Plataforma de Antecipação de Recebíveis Multi-Tenant (Globals)</h3>
+                <span class="badge-status" data-i18n="project6-badge">Projeto Corporativo Integrado</span>
               </div>
-              <p class="project-text">
+              <p class="project-text" data-i18n="project6-desc">
                 Arquitetura e desenvolvimento de aplicação web corporativa em
                 Next.js para operação financeira de antecipação de recebíveis.
                 Estruturada em modelo multi-tenant com suporte completo a cargos
                 e permissões (RBAC) e hierarquia complexa entre entidades do
                 sistema (Root → Tenant → Company → Branch).
               </p>
-              <div class="project-decisions">
+              <div class="project-decisions" data-i18n="project6-technical">
                 <strong>Decisões e Engenharia:</strong> Modelagem de autorização
                 granular, isolamento rigoroso de contexto entre empresas e
                 filiais e interface consistente.
               </div>
               <div class="tech-tags">
-                <span class="tag">Next.js</span>
-                <span class="tag">React</span>
-                <span class="tag">TypeScript</span>
-                <span class="tag">Java</span>
-                <span class="tag">Multi-Tenant Architecture</span>
-                <span class="tag">RBAC / Permissões</span>
+                <span class="tag" data-i18n="project6-tech-1">Next.js</span>
+                <span class="tag" data-i18n="project6-tech-2">React</span>
+                <span class="tag" data-i18n="project6-tech-3">TypeScript</span>
+                <span class="tag" data-i18n="project6-tech-4">Java</span>
+                <span class="tag" data-i18n="project6-tech-5">Multi-Tenant Architecture</span>
+                <span class="tag" data-i18n="project6-tech-6">RBAC / Permissões</span>
               </div>
             </article>
 
-            <article class="card-project animate-on-scroll">
+            <article class="card-project animate-on-scroll" data-i18n-key="project7">
               <div class="project-header">
-                <h3 class="project-title">
-                  Portal Interno BFF para Otimização com IA Generativa (Rozac)
-                </h3>
-                <span class="badge-status">Em Uso Operacional</span>
+                <h3 class="project-title" data-i18n="project7-title">Portal Interno BFF para Otimização com IA Generativa (Rozac)</h3>
+                <span class="badge-status" data-i18n="project7-badge">Em Uso Operacional</span>
               </div>
-              <p class="project-text">
+              <p class="project-text" data-i18n="project7-desc">
                 Criação de portal interno composto por um frontend moderno e uma
                 camada de BFF (Backend For Frontend). Desenvolvido para integrar
                 com ferramentas de IA Generativa e viabilizar a otimização de
                 processos internos, permitindo consultas inteligentes e rápidas
                 diretamente nos dados do ERP da empresa.
               </p>
-              <div class="project-decisions">
+              <div class="project-decisions" data-i18n="project7-technical">
                 <strong>Decisões e Engenharia:</strong> Aplicação escalável para
                 comportar múltiplos setores da empresa e regras de negócio
                 voláteis.
               </div>
               <div class="tech-tags">
-                <span class="tag">TypeScript</span>
-                <span class="tag">BFF Pattern</span>
-                <span class="tag">IA Generativa</span>
-                <span class="tag">Integração ERP</span>
-                <span class="tag">Node.js / NestJS</span>
+                <span class="tag" data-i18n="project7-tech-1">TypeScript</span>
+                <span class="tag" data-i18n="project7-tech-2">BFF Pattern</span>
+                <span class="tag" data-i18n="project7-tech-3">IA Generativa</span>
+                <span class="tag" data-i18n="project7-tech-4">Integração ERP</span>
+                <span class="tag" data-i18n="project7-tech-5">Node.js / NestJS</span>
               </div>
             </article>
 
-            <article class="card-project animate-on-scroll">
+            <article class="card-project animate-on-scroll" data-i18n-key="project8">
               <div class="project-header">
-                <h3 class="project-title">
-                  Sustentação e Evolução de Sistemas de Missão Crítica (Globals
-                  & Rozac)
-                </h3>
-                <span class="badge-status">Zero Downtime</span>
+                <h3 class="project-title" data-i18n="project8-title">Sustentação e Evolução de Sistemas de Missão Crítica (Globals &amp; Rozac)</h3>
+                <span class="badge-status" data-i18n="project8-badge">Zero Downtime</span>
               </div>
-              <p class="project-text">
+              <p class="project-text" data-i18n="project8-desc">
                 Atuação direta na manutenção corretiva e evolutiva de sistemas
                 legados vitais para o negócio — incluindo o sistema financeiro
                 BaaS (Bank as a Service) na Globals e o Portal de Vendas na
                 Rozac. Projetados para operação ininterrupta, recebem
                 refatorações arquiteturais, novas funcionalidades e correções de
                 alto valor sem comprometer a estabilidade do produto.
-              </p>
-              <div class="project-decisions">
+                         <div class="project-decisions" data-i18n="project8-technical">
                 <strong>Decisões e Engenharia:</strong> Implementação de
                 esteiras de CI/CD, diagnóstico rápido de causas-raiz via
                 consulta estruturada de logs, conteinerização com Docker e
                 refatorações orientadas à manutenibilidade.
               </div>
               <div class="tech-tags">
-                <span class="tag">BaaS / Financeiro</span>
-                <span class="tag">Portal de Vendas</span>
-                <span class="tag">Docker</span>
-                <span class="tag">CI/CD</span>
-                <span class="tag">Observabilidade / Logs</span>
-                <span class="tag">Bancos de Dados</span>
+                <span class="tag" data-i18n="project8-tech-1">BaaS / Financeiro</span>
+                <span class="tag" data-i18n="project8-tech-2">Portal de Vendas</span>
+                <span class="tag" data-i18n="project8-tech-3">Docker</span>
+                <span class="tag" data-i18n="project8-tech-4">CI/CD</span>
+                <span class="tag" data-i18n="project8-tech-5">Observabilidade / Logs</span>
+                <span class="tag" data-i18n="project8-tech-6">Bancos de Dados</span>
               </div>
             </article>
           </div>
@@ -505,18 +605,18 @@
 
       <section id="sobre">
         <div class="container">
-          <p class="section-label animate-on-scroll">Trajetória</p>
-          <h2 class="section-title animate-on-scroll">Sobre Mim</h2>
+          <p class="section-label animate-on-scroll" data-i18n="about-section-label">Trajetória</p>
+          <h2 class="section-title animate-on-scroll" data-i18n="about-title">Sobre Mim</h2>
           <div class="about-grid">
             <div class="about-text animate-on-scroll">
-              <p>
+              <p data-i18n="about-text-1">
                 Desenvolvedor de software Full Stack com cerca de 3 anos de
                 experiência profissional no ecossistema de desenvolvimento,
                 construindo desde ecossistemas mobile robustos (offline-first,
                 whitelabel multi-tenant) até plataformas web corporativas e
                 portais integrados com BFF e IA.
               </p>
-              <p>
+              <p data-i18n="about-text-2">
                 Com sólida bagagem na sustentação e evolução de sistemas de
                 missão crítica (sistemas financeiros BaaS, aplicações
                 portuárias, portais comerciais e soluções industriais), trago
@@ -524,7 +624,7 @@
                 negócio, arquitetura limpa, automação avançada de infraestrutura
                 e pipelines de CI/CD.
               </p>
-              <p>
+              <p data-i18n="about-text-3">
                 Formado em
                 <strong>Análise e Desenvolvimento de Sistemas</strong> (2024),
                 resido em Americana/SP. Atuo com comunicação clara com equipes
@@ -535,41 +635,41 @@
 
             <div class="skills-block">
               <div>
-                <h3 class="skills-group-title">
+                <h3 class="skills-group-title" data-i18n="skills-group-frontend">
                   Linguagens & Frontend / Mobile
                 </h3>
                 <div class="tech-tags">
-                  <span class="tag">TypeScript</span>
-                  <span class="tag">JavaScript</span>
-                  <span class="tag">React</span>
-                  <span class="tag">React Native</span>
-                  <span class="tag">Angular</span>
-                  <span class="tag">Next.js</span>
-                  <span class="tag">Vite</span>
+                  <span class="tag" data-i18n="project1-tech-4">TypeScript</span>
+                  <span class="tag" data-i18n="skill-javascript">JavaScript</span>
+                  <span class="tag" data-i18n="skill-react">React</span>
+                  <span class="tag" data-i18n="project1-tech-1">React Native</span>
+                  <span class="tag" data-i18n="project3-tech-1">Angular</span>
+                  <span class="tag" data-i18n="skill-nextjs">Next.js</span>
+                  <span class="tag" data-i18n="skill-vite">Vite</span>
                 </div>
               </div>
 
               <div>
-                <h3 class="skills-group-title">Backend, APIs & Integração</h3>
+                <h3 class="skills-group-title" data-i18n="skills-group-backend">Backend, APIs & Integração</h3>
                 <div class="tech-tags">
-                  <span class="tag">Node.js</span>
-                  <span class="tag">NestJS</span>
-                  <span class="tag">APIs REST</span>
-                  <span class="tag">BFF (Backend For Frontend)</span>
-                  <span class="tag">Bancos de Dados Relacionais</span>
-                  <span class="tag">Java Quarkus (Básico)</span>
+                  <span class="tag" data-i18n="skill-nodejs">Node.js</span>
+                  <span class="tag" data-i18n="skill-nestjs">NestJS</span>
+                  <span class="tag" data-i18n="project1-tech-5">APIs REST</span>
+                  <span class="tag" data-i18n="skill-bff">BFF (Backend For Frontend)</span>
+                  <span class="tag" data-i18n="skill-relational-databases">Bancos de Dados Relacionais</span>
+                  <span class="tag" data-i18n="skill-java-quarkus">Java Quarkus (Básico)</span>
                 </div>
               </div>
 
               <div>
-                <h3 class="skills-group-title">DevOps, Nuvem & Ferramentas</h3>
+                <h3 class="skills-group-title" data-i18n="skills-group-devops">DevOps, Nuvem & Ferramentas</h3>
                 <div class="tech-tags">
-                  <span class="tag">Docker</span>
-                  <span class="tag">CI/CD (GitHub Actions / Jenkins)</span>
-                  <span class="tag">Self-Hosted Runners</span>
-                  <span class="tag">Hospedagem Local & Cloud</span>
-                  <span class="tag">Terraform (Básico)</span>
-                  <span class="tag">Azure DevOps / AWS (Básico)</span>
+                  <span class="tag" data-i18n="project8-tech-3">Docker</span>
+                  <span class="tag" data-i18n="skill-cicd">CI/CD (GitHub Actions / Jenkins)</span>
+                  <span class="tag" data-i18n="skill-self-hosted-runners">Self-Hosted Runners</span>
+                  <span class="tag" data-i18n="skill-cloud-hosting">Hospedagem Local & Cloud</span>
+                  <span class="tag" data-i18n="skill-terraform-basic">Terraform (Básico)</span>
+                  <span class="tag" data-i18n="skill-azure-aws-basic">Azure DevOps / AWS (Básico)</span>
                 </div>
               </div>
             </div>
@@ -579,32 +679,32 @@
 
       <section id="experiencia">
         <div class="container">
-          <p class="section-label animate-on-scroll">Histórico</p>
-          <h2 class="section-title animate-on-scroll">
+          <p class="section-label animate-on-scroll" data-i18n="experience-section-label">Histórico</p>
+          <h2 class="section-title animate-on-scroll" data-i18n="experience-title">
             Experiência Profissional
           </h2>
           <div class="timeline">
             <article class="timeline-item animate-on-scroll">
               <div class="timeline-header">
                 <div>
-                  <h3 class="company-name">Rozac Comércio e Exportação</h3>
-                  <p class="role-title">Desenvolvedor de Software Full Stack</p>
+                  <h3 class="company-name" data-i18n="experience1-company">Rozac Comércio e Exportação</h3>
+                  <p class="role-title" data-i18n="experience1-role">Desenvolvedor de Software Full Stack</p>
                 </div>
-                <span class="timeline-period">Maio de 2026 — Presente</span>
+                <span class="timeline-period" data-i18n="experience1-period">Maio de 2026 — Outubro de 2026</span>
               </div>
               <ul class="timeline-list">
-                <li>
+                <li data-i18n="experience1-bullet-1">
                   Desenvolvimento e arquitetura do Portal Interno BFF integrado
                   a soluções de IA Generativa para otimização de fluxos de
                   trabalho e consultas inteligentes ao ERP da empresa.
                 </li>
-                <li>
+                <li data-i18n="experience1-bullet-2">
                   Manutenção evolutiva e refatoração do Portal de Vendas da
                   empresa (sistema crítico de negócio), entregando melhorias
                   arquiteturais e correções pontuais sem interrupção de
                   operação.
                 </li>
-                <li>
+                <li data-i18n="experience1-bullet-3">
                   Construção e manutenção de pipelines de CI/CD, conteinerização
                   com Docker, monitoramento de logs, além de comunicação direta
                   com times internos e parceiros externos.
@@ -615,41 +715,61 @@
             <article class="timeline-item animate-on-scroll">
               <div class="timeline-header">
                 <div>
-                  <h3 class="company-name">Globals</h3>
-                  <p class="role-title">Desenvolvedor de Software Full Stack</p>
+                  <h3 class="company-name" data-i18n="experience2-company">Globals</h3>
+                  <p class="role-title" data-i18n="experience2-role">Desenvolvedor de Software Full Stack</p>
                 </div>
-                <span class="timeline-period"
-                  >Maio de 2024 — Abril de 2026</span
-                >
+                <span class="timeline-period" data-i18n="experience2-period">
+                  Maio de 2024 — Abril de 2026
+                </span>
               </div>
               <ul class="timeline-list">
-                <li>
+                <li data-i18n="experience2-bullet-1">
                   Desenvolvimento de aplicativos mobile para o setor têxtil:
                   solução offline-first para vendas via QR Code em feiras e
                   aplicativo de gestão interna de funcionários, comissões e
                   vendas.
                 </li>
-                <li>
+                <li data-i18n="experience2-bullet-2">
                   Atuação principal no desenvolvimento do novo aplicativo
                   bancário whitelabel multi-tenant (multi-layout e multi-tema) e
                   sustentação de versão legada prévia.
                 </li>
-                <li>
+                <li data-i18n="experience2-bullet-3">
                   Desenvolvimento da plataforma web fitness em Angular para a
                   Newon (newon.com.br) e sistema web de gestão de navios
                   integrado via BFF a provedor externo.
                 </li>
-                <li>
+                <li data-i18n="experience2-bullet-4">
                   Sustentação de sistema legado white-label voltado a
                   condomínios (atendendo moradores e seguranças) e de plataforma
                   Next.js multi-tenant de antecipação de recebíveis (com RBAC e
                   hierarquia Root → Tenant → Company → Branch).
                 </li>
-                <li>
+                <li data-i18n="experience2-bullet-5">
                   Criação e estruturação de projetos internos de CI/CD
                   abrangendo todo o ecossistema: GitHub Actions, Jenkins,
                   Terraform, Docker, hospedagem local, configuração de
                   self-hosted runners e pipelines automatizados.
+                </li>
+              </ul>
+            </article>
+
+            <article class="timeline-item animate-on-scroll">
+              <div class="timeline-header">
+                <div>
+                  <h3 class="company-name" data-i18n="experience3-company">SoftHouse</h3>
+                  <p class="role-title" data-i18n="experience3-role">Desenvolvedor Estagiário</p>
+                </div>
+                <span class="timeline-period" data-i18n="experience3-period">
+                  Setembro de 2023 — Maio de 2024
+                </span>
+              </div>
+              <ul class="timeline-list">
+                <li data-i18n="experience3-bullet-1">
+                  Implementação e deploy de sistemas de Gestão Eletrônica de Documentos (GED/EDM) em organizações públicas, incluindo prefeituras, câmaras municipais e empresas de utilities (energia, água e eletricidade).
+                </li>
+                <li data-i18n="experience3-bullet-2">
+                  Suporte técnico, configuração e troubleshooting durante as implementações on-site.
                 </li>
               </ul>
             </article>
@@ -660,29 +780,27 @@
       <section id="contato">
         <div class="container">
           <div class="contact-card">
-            <h2 class="contact-title">Vamos conversar?</h2>
-            <p class="contact-desc">
+            <h2 class="contact-title" data-i18n="contact-title">Vamos conversar?</h2>
+            <p class="contact-desc" data-i18n="contact-desc">
               Estou à disposição para detalhar minhas experiências, discutir
               decisões técnicas e entender como minhas competências podem apoiar
               a missão da RUSHINGWIND.
             </p>
             <div class="contact-links">
-              <a href="mailto:italolenza@gmail.com" class="btn btn-primary"
-                >Enviar E-mail</a
-              >
+              <a href="mailto:italolenza@gmail.com" class="btn btn-primary" data-i18n="contact-btn-email">Enviar E-mail</a>
               <a
                 href="https://github.com/ital01"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="btn btn-secondary"
-                >GitHub</a
+                data-i18n="contact-btn-github">GitHub</a
               >
               <a
                 href="https://www.linkedin.com/in/italoalmeida1"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="btn btn-secondary"
-                >LinkedIn</a
+                data-i18n="contact-btn-linkedin">LinkedIn</a
               >
             </div>
           </div>
@@ -692,7 +810,7 @@
 
     <footer>
       <div class="container footer-wrapper">
-        <p>
+        <p class="footer-copyright" data-i18n="footer-copyright">
           &copy; <span id="year"></span> Italo Almeida. Americana, SP — Brasil.
         </p>
         <ul class="footer-links">
@@ -701,7 +819,7 @@
               href="https://github.com/ital01"
               target="_blank"
               rel="noopener noreferrer"
-              >GitHub</a
+              data-i18n="footer-link-github">GitHub</a
             >
           </li>
           <li>
@@ -709,13 +827,13 @@
               href="https://www.linkedin.com/in/italoalmeida1"
               target="_blank"
               rel="noopener noreferrer"
-              >LinkedIn</a
+              data-i18n="footer-link-linkedin">LinkedIn</a
             >
           </li>
         </ul>
       </div>
     </footer>
 
-    <script src="index.js"></script>
+    <script type="module" src="main.js"></script>
   </body>
 </html>

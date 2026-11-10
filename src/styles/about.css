@@ -1,0 +1,26 @@
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.about-text {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.skills-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.skills-group-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-main);
+}

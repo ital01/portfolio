@@ -1,0 +1,40 @@
+.mission-box {
+  background: var(--accent-light);
+  border: 1px solid rgba(30, 64, 175, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+}
+
+.mission-text {
+  font-size: 1.1rem;
+  color: var(--text-main);
+  line-height: 1.7;
+}
+
+.contact-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 3rem 2rem;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.contact-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.contact-desc {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}

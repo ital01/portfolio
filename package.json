@@ -1,0 +1,12 @@
+{
+  "name": "italo-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Personal portfolio — static site built from src/ partials",
+  "scripts": {
+    "build": "bun build.ts"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}
